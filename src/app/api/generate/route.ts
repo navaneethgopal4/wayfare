@@ -81,12 +81,13 @@ export async function POST(request: Request) {
       itinerary: validatedItinerary
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error generating itinerary in serverless route:', error);
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred during itinerary generation.';
     return NextResponse.json(
       { 
         error: 'GENERATION_FAILED', 
-        message: error.message || 'An error occurred during itinerary generation.' 
+        message: errorMessage
       },
       { status: 500 }
     );

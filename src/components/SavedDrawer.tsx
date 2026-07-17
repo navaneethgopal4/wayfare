@@ -138,7 +138,7 @@ export default function SavedDrawer({ open, trips, onClose, onLoadTrip, onDelete
                   <button
                     onClick={(e) => {
                       e.stopPropagation(); // Avoid triggering card load click
-                      handleDeleteSavedTrip(trip.id);
+                      onDeleteTrip(trip.id);
                     }}
                     className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg opacity-80 sm:opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all"
                     title="Delete saved plan"

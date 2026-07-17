@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Trip, Day, Stop } from './storage';
 
 // Helper to validate and clean the parsed object to match our Trip schema
@@ -81,7 +82,7 @@ export function extractJSON(text: string): any {
   // Attempt direct parse
   try {
     return JSON.parse(cleaned);
-  } catch (err) {
+  } catch {
     // If it fails, search for the first '{' and last '}'
     const startIdx = cleaned.indexOf('{');
     const endIdx = cleaned.lastIndexOf('}');

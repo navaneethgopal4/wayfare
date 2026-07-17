@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Sparkles, Map } from 'lucide-react';
+import { Sparkles, Map } from 'lucide-react';
 
 interface PopularDestinationsProps {
   onSelect: (prompt: string) => void;
