@@ -8,6 +8,7 @@ import PopularDestinations from '@/components/PopularDestinations';
 import ItineraryView from '@/components/ItineraryView';
 import { 
   Trip, 
+  Stop,
   getSavedTrips, 
   saveTrip as saveTripToStorage, 
   deleteSavedTrip as deleteSavedFromStorage,
@@ -18,6 +19,13 @@ import {
   UserSettings
 } from '@/utils/storage';
 import { simulateTripGeneration, simulateTripRefinement } from '@/utils/simulator';
+import { 
+  SYSTEM_PROMPT, 
+  getPromptForNewTrip, 
+  getPromptForRefinement, 
+  extractJSON, 
+  validateTripJSON 
+} from '@/utils/gemini';
 
 export default function Home() {
   // Orchestration states
@@ -38,9 +46,14 @@ export default function Home() {
 
   // Initialize values on client mount
   useEffect(() => {
-    setSavedTrips(getSavedTrips());
-    setActiveTripState(getActiveTrip());
-    setSettingsState(getSettings());
+    const initData = () => {
+      setSavedTrips(getSavedTrips());
+      setActiveTripState(getActiveTrip());
+      setSettingsState(getSettings());
+    };
+    // Schedule next tick to avoid synchronous cascading renders warning
+    const timer = setTimeout(initData, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Show a toast message helper
@@ -116,52 +129,118 @@ export default function Home() {
     }, 800);
 
     try {
-      // 2. Call local backend route with prompt and key
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: promptText,
-          userApiKey: settings.apiKey,
-        }),
-      });
+      let resultItinerary = null;
+      let useStaticFallback = false;
 
-      clearInterval(stepInterval);
+      try {
+        // 2. Call local backend route with prompt and key
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: promptText,
+            userApiKey: settings.apiKey,
+          }),
+        });
 
-      // Check if this async callback is stale (overwritten by a newer click)
-      if (activeGenerationId.current !== generationId) {
-        console.warn('Discarded stale itinerary generation');
-        return;
-      }
+        clearInterval(stepInterval);
 
-      if (response.status === 401) {
-        // API key missing on server & client
-        console.log('No API key detected, triggering simulated fallback...');
-        setLoadingStep('Running in simulated Demo Mode...');
-        const simulated = await simulateTripGeneration(promptText);
-        
-        if (activeGenerationId.current === generationId) {
-          handleSetActiveTrip(simulated);
-          const updated = saveTripToStorage(simulated);
-          setSavedTrips(updated);
-          setIsDemoMode(true);
-          showToast('Trip generated in Simulated Demo Mode', 'success');
+        // Check if this async callback is stale (overwritten by a newer click)
+        if (activeGenerationId.current !== generationId) {
+          console.warn('Discarded stale itinerary generation');
+          return;
         }
-        return;
+
+        if (response.status === 401) {
+          // API key missing on server & client
+          console.log('No API key detected, triggering simulated fallback...');
+          setLoadingStep('Running in simulated Demo Mode...');
+          const simulated = await simulateTripGeneration(promptText);
+          
+          if (activeGenerationId.current === generationId) {
+            handleSetActiveTrip(simulated);
+            const updated = saveTripToStorage(simulated);
+            setSavedTrips(updated);
+            setIsDemoMode(true);
+            showToast('Trip generated in Simulated Demo Mode', 'success');
+          }
+          return;
+        }
+
+        if (response.status === 404) {
+          useStaticFallback = true;
+        } else if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `Server responded with status ${response.status}`);
+        } else {
+          const result = await response.json();
+          resultItinerary = result.itinerary;
+        }
+      } catch (err) {
+        if (settings.apiKey) {
+          useStaticFallback = true;
+        } else {
+          throw err;
+        }
       }
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Server responded with status ${response.status}`);
+      if (useStaticFallback) {
+        if (!settings.apiKey) {
+          throw new Error('API key missing. Configure a Gemini key in settings for static hosting.');
+        }
+
+        setLoadingStep('Directly planning trip from browser...');
+        const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${settings.apiKey}`;
+        const userPrompt = getPromptForNewTrip(promptText);
+
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: userPrompt }],
+              },
+            ],
+            systemInstruction: {
+              parts: [{ text: SYSTEM_PROMPT }],
+            },
+            generationConfig: {
+              responseMimeType: 'application/json',
+              temperature: 0.2,
+            },
+          }),
+        });
+
+        clearInterval(stepInterval);
+        if (activeGenerationId.current !== generationId) return;
+
+        if (!response.ok) {
+          throw new Error(`Direct Gemini API failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!rawText) {
+          throw new Error('Direct Gemini API returned an empty response.');
+        }
+
+        const parsedJSON = extractJSON(rawText);
+        resultItinerary = validateTripJSON(parsedJSON);
       }
 
-      const result = await response.json();
+      if (!resultItinerary) {
+        throw new Error('Could not generate trip itinerary.');
+      }
       
       // Save result and update view
       const newTrip: Trip = {
-        ...result.itinerary,
+        ...resultItinerary,
         id: `trip-${Math.random().toString(36).substring(2, 11)}`,
         createdAt: new Date().toISOString(),
         originalPrompt: promptText,
@@ -172,12 +251,13 @@ export default function Home() {
       setSavedTrips(updated);
       showToast('AI Trip Plan generated successfully!', 'success');
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       clearInterval(stepInterval);
       if (activeGenerationId.current === generationId) {
         console.error('Itinerary generation error:', err);
+        const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred during trip planning.';
         // Show user-friendly error state with option to fallback/retry
-        setError(err.message || 'An unexpected error occurred during trip planning.');
+        setError(errorMessage);
         showToast('Generation failed', 'error');
       }
     } finally {
@@ -214,6 +294,9 @@ export default function Home() {
     }, 600);
 
     try {
+      let refinedItinerary = null;
+      let useStaticFallback = false;
+
       // If we are in demo mode (no API key configured), refine using local simulator
       if (isDemoMode) {
         await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -229,32 +312,95 @@ export default function Home() {
         return;
       }
 
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          prompt: refinementPrompt,
-          refine: true,
-          currentTrip: activeTrip,
-          userApiKey: settings.apiKey,
-        }),
-      });
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt: refinementPrompt,
+            refine: true,
+            currentTrip: activeTrip,
+            userApiKey: settings.apiKey,
+          }),
+        });
 
-      clearInterval(stepInterval);
+        clearInterval(stepInterval);
 
-      if (activeGenerationId.current !== generationId) return;
+        if (activeGenerationId.current !== generationId) return;
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to refine trip.');
+        if (response.status === 404) {
+          useStaticFallback = true;
+        } else if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to refine trip.');
+        } else {
+          const result = await response.json();
+          refinedItinerary = result.itinerary;
+        }
+      } catch (err) {
+        if (settings.apiKey) {
+          useStaticFallback = true;
+        } else {
+          throw err;
+        }
       }
 
-      const result = await response.json();
+      if (useStaticFallback) {
+        if (!settings.apiKey) {
+          throw new Error('API key missing. Configure a Gemini key in settings for static hosting.');
+        }
+
+        setLoadingStep('Directly refining trip from browser...');
+        const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${settings.apiKey}`;
+        const userPrompt = getPromptForRefinement(activeTrip, refinementPrompt);
+
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: userPrompt }],
+              },
+            ],
+            systemInstruction: {
+              parts: [{ text: SYSTEM_PROMPT }],
+            },
+            generationConfig: {
+              responseMimeType: 'application/json',
+              temperature: 0.2,
+            },
+          }),
+        });
+
+        clearInterval(stepInterval);
+        if (activeGenerationId.current !== generationId) return;
+
+        if (!response.ok) {
+          throw new Error(`Direct Gemini API failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!rawText) {
+          throw new Error('Direct Gemini API returned an empty response.');
+        }
+
+        const parsedJSON = extractJSON(rawText);
+        refinedItinerary = validateTripJSON(parsedJSON);
+      }
+
+      if (!refinedItinerary) {
+        throw new Error('Could not refine trip itinerary.');
+      }
       
       const refinedTrip: Trip = {
-        ...result.itinerary,
+        ...refinedItinerary,
         id: activeTrip.id, // Preserve same ID to update same session
         createdAt: activeTrip.createdAt,
         originalPrompt: activeTrip.originalPrompt,
@@ -265,11 +411,12 @@ export default function Home() {
       setSavedTrips(updated);
       showToast('Trip refined successfully!', 'success');
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       clearInterval(stepInterval);
       if (activeGenerationId.current === generationId) {
         console.error('Itinerary refinement error:', err);
-        setError(`Refinement failed: ${err.message}`);
+        const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+        setError(`Refinement failed: ${errorMessage}`);
         showToast('Refinement failed', 'error');
       }
     } finally {
@@ -280,7 +427,7 @@ export default function Home() {
   };
 
   // Custom filter version save (saves subset of current trip as new trip)
-  const handleSaveFilteredVersion = (filteredStopsByDay: { [dayNum: number]: any[] }, titleSuffix = '(Filtered)') => {
+  const handleSaveFilteredVersion = (filteredStopsByDay: { [dayNum: number]: Stop[] }, titleSuffix = '(Filtered)') => {
     if (!activeTrip) return;
 
     const validatedDays = activeTrip.days
