@@ -13,12 +13,11 @@ interface ItineraryViewProps {
 
 type DurationFilter = 'all' | 'under30' | 'mid' | 'over90';
 
-// Helper to parse duration string (e.g., "45 min", "2 hours") to minutes
 function parseDuration(durationStr: string): number {
   try {
     const clean = durationStr.toLowerCase().trim();
     const numbers = clean.match(/\d+(\.\d+)?/);
-    if (!numbers) return 60; // Default fallback
+    if (!numbers) return 60;
 
     const val = parseFloat(numbers[0]);
     if (clean.includes('hour') || clean.includes('hr') || (clean.includes('h') && !clean.includes('min'))) {
@@ -36,7 +35,6 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
   const [refineInput, setRefineInput] = useState('');
   const [expandedDays, setExpandedDays] = useState<{ [dayNum: number]: boolean }>({ 1: true });
 
-  // Toggle expansion of specific day accordion
   const toggleDayExpansion = (dayNum: number) => {
     setExpandedDays(prev => ({
       ...prev,
@@ -44,13 +42,11 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
     }));
   };
 
-  // 1. Filter stops based on search text and duration tabs
   const filteredStopsByDay = useMemo(() => {
     const result: { [dayNum: number]: Stop[] } = {};
 
     trip.days.forEach((day) => {
       const filtered = day.stops.filter((stop) => {
-        // Search filter matching name, description, location, and category
         const matchesSearch = 
           stop.title.toLowerCase().includes(searchText.toLowerCase()) ||
           stop.description.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -59,7 +55,6 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
 
         if (!matchesSearch) return false;
 
-        // Duration filter matching tabs
         if (durationFilter === 'all') return true;
         const mins = parseDuration(stop.duration);
         if (durationFilter === 'under30') return mins <= 30;
@@ -75,7 +70,6 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
     return result;
   }, [trip, searchText, durationFilter]);
 
-  // Statistics counters
   const totalStopsCount = useMemo(() => {
     return trip.days.reduce((acc, day) => acc + day.stops.length, 0);
   }, [trip]);
@@ -86,13 +80,11 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
 
   const isFiltered = searchText.trim() !== '' || durationFilter !== 'all';
 
-  // Clear all filters
   const handleClearFilters = () => {
     setSearchText('');
     setDurationFilter('all');
   };
 
-  // 2. Day-level / Stop-level State Modifiers
   const handleUpdateStop = (dayNum: number, stopId: string, updatedFields: Partial<Stop>) => {
     const updatedDays = trip.days.map((day) => {
       if (day.dayNumber !== dayNum) return day;
@@ -165,14 +157,11 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
     });
 
     onUpdateTrip({ ...trip, days: updatedDays });
-    
-    // Automatically make sure the day accordion is expanded when adding
     setExpandedDays(prev => ({ ...prev, [dayNum]: true }));
   };
 
   const handleRemoveDay = (dayNum: number) => {
     const filteredDays = trip.days.filter((d) => d.dayNumber !== dayNum);
-    // Re-index remaining days to maintain chronological sequential numbers
     const reindexedDays = filteredDays.map((day, idx) => ({
       ...day,
       dayNumber: idx + 1,
@@ -181,7 +170,6 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
     onUpdateTrip({ ...trip, days: reindexedDays });
   };
 
-  // Submit refinement prompt
   const handleRefineSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!refineInput.trim()) return;
@@ -192,12 +180,12 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
   return (
     <div className="w-full space-y-6 pb-24 animate-fade-in">
       
-      {/* 1. Header Navigation & Details Card */}
-      <div className="glass dark:glass border border-slate-200/50 dark:border-slate-800/50 p-6 rounded-2xl shadow-sm flex flex-col space-y-4">
+      {/* 1. Header Details Card */}
+      <div className="border border-border bg-card p-6 rounded-2xl shadow-sm flex flex-col space-y-4">
         <div className="flex items-center gap-3">
           <button 
             onClick={onClose}
-            className="p-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-xl text-slate-500 dark:text-slate-400 transition-colors"
+            className="p-2 border border-border hover:bg-muted rounded-full text-slate-500 dark:text-slate-400 transition-colors active:scale-95"
             title="Go back"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -214,11 +202,11 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
       </div>
 
       {/* 2. Search & Filter Bar */}
-      <div className="glass dark:glass border border-slate-200/50 dark:border-slate-800/50 p-4 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border border-border bg-card p-4 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         
-        {/* Search & Duration Tabs Group */}
+        {/* Search & Tabs */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
-          {/* Keyword Search Input */}
+          {/* Keyword Search */}
           <div className="relative flex-1">
             <Search className="h-4 w-4 text-slate-400 absolute left-3.5 top-3" />
             <input
@@ -226,12 +214,12 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
               placeholder="Search stops, categories..."
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-border rounded-full text-xs font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary transition-all"
             />
           </div>
 
           {/* Duration tabs */}
-          <div className="flex gap-1 bg-slate-100 dark:bg-slate-950 p-1 rounded-xl self-start sm:self-auto border border-slate-200/40 dark:border-slate-800/40">
+          <div className="flex gap-1 bg-slate-100 dark:bg-slate-950 p-1 rounded-full border border-border/40 self-start sm:self-auto select-none">
             {[
               { key: 'all', label: 'All' },
               { key: 'under30', label: '≤30 min' },
@@ -241,9 +229,9 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
               <button
                 key={tab.key}
                 onClick={() => setDurationFilter(tab.key as DurationFilter)}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors border border-transparent select-none ${
+                className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-colors border border-transparent select-none ${
                   durationFilter === tab.key
-                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm border-slate-200/40 dark:border-slate-800/40'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm border-border/40'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
                 }`}
               >
@@ -253,9 +241,9 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
           </div>
         </div>
 
-        {/* Action / Statistics Group */}
-        <div className="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 pt-3 md:pt-0 border-slate-200/40 dark:border-slate-800/40">
-          <div className="text-xs font-semibold text-slate-400 dark:text-slate-500">
+        {/* Action / statistics */}
+        <div className="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 pt-3 md:pt-0 border-border/40">
+          <div className="text-xs font-bold text-slate-400 dark:text-slate-500">
             Showing <strong className="text-slate-700 dark:text-slate-300">{filteredStopsCount}</strong> of {totalStopsCount} stops
           </div>
 
@@ -263,14 +251,14 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
             <div className="flex items-center gap-2">
               <button
                 onClick={handleClearFilters}
-                className="flex items-center gap-1 px-3 py-2 text-xs font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-border rounded-full hover:bg-muted transition-colors active:scale-95"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Clear
               </button>
               <button
                 onClick={() => onSaveFiltered(filteredStopsByDay)}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-violet-600 hover:bg-violet-700 rounded-xl transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-primary hover:opacity-90 rounded-full transition-all shadow-sm active:scale-95"
               >
                 <BookmarkCheck className="h-3.5 w-3.5" />
                 Save Filtered
@@ -305,9 +293,9 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
       </div>
 
       {/* 4. Refinement Loop Chat Panel */}
-      <div className="glass dark:glass border border-slate-200/50 dark:border-slate-800/50 p-6 rounded-2xl shadow-sm flex flex-col space-y-4 mt-8">
+      <div className="border border-border bg-card p-6 rounded-2xl shadow-sm flex flex-col space-y-4 mt-8">
         <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+          <Sparkles className="h-4 w-4 text-primary" />
           <h3 className="font-extrabold text-sm text-slate-800 dark:text-slate-200">Refine this itinerary</h3>
         </div>
         <form onSubmit={handleRefineSubmit} className="relative flex items-center gap-3">
@@ -322,12 +310,12 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
               }
             }}
             placeholder='e.g., "Add more food stops to Day 2" or "Make it more budget friendly"'
-            className="w-full pl-4 pr-14 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all text-xs font-semibold resize-none h-[48px] overflow-hidden"
+            className="w-full pl-4 pr-14 py-3.5 bg-slate-50 dark:bg-slate-950 border border-border rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary transition-all text-xs font-semibold resize-none h-[48px] overflow-hidden"
           />
           <button
             type="submit"
             disabled={!refineInput.trim()}
-            className="absolute right-2 top-2 p-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="absolute right-2 top-2 p-2 bg-primary hover:opacity-90 text-white rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             title="Send refinement"
           >
             <Send className="h-4 w-4" />

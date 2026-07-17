@@ -529,8 +529,8 @@ export default function Home() {
           <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-[2px] z-[90] flex flex-col items-center justify-center animate-fade-in">
             <div className="glass p-8 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 shadow-2xl flex flex-col items-center max-w-xs text-center space-y-4">
               <div className="relative">
-                <div className="h-12 w-12 rounded-full border-4 border-slate-200 dark:border-slate-800 border-t-violet-600 dark:border-t-violet-400 animate-spin" />
-                <Compass className="h-6 w-6 text-violet-600 dark:text-violet-400 absolute inset-0 m-auto animate-pulse" />
+                <div className="h-12 w-12 rounded-full border-4 border-slate-200 dark:border-slate-800 border-t-primary animate-spin" />
+                <Compass className="h-6 w-6 text-primary absolute inset-0 m-auto animate-pulse" />
               </div>
               <div className="space-y-1">
                 <h4 className="font-bold text-slate-900 dark:text-white">Mapping your itinerary...</h4>
@@ -609,7 +609,7 @@ export default function Home() {
                   placeholder='e.g., "5 relaxed days in Lisbon with family exploring tiles and sweet bakeries"'
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full p-4 pr-12 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all text-base resize-none font-medium"
+                  className="w-full p-4 pr-12 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base resize-none font-medium"
                 />
                 <div className="absolute bottom-3 right-3 text-xs font-semibold text-slate-400">
                   {searchQuery.length}/2000
@@ -624,7 +624,7 @@ export default function Home() {
                       setSearchQuery('5 relaxed days in Lisbon, slow travel viewpoints and bakeries');
                       handlePlanTrip('5 relaxed days in Lisbon, slow travel viewpoints and bakeries');
                     }}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
+                    className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
                   >
                     Lisbon 🇵🇹
                   </button>
@@ -633,7 +633,7 @@ export default function Home() {
                       setSearchQuery('3-day solo food trip to Tokyo, ramen and standing sushi bar crawls');
                       handlePlanTrip('3-day solo food trip to Tokyo, ramen and standing sushi bar crawls');
                     }}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
+                    className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
                   >
                     Tokyo 🇯🇵
                   </button>
@@ -642,7 +642,7 @@ export default function Home() {
                       setSearchQuery('Weekend in Barcelona for two, Gaudí architecture and waterfront seafood');
                       handlePlanTrip('Weekend in Barcelona for two, Gaudí architecture and waterfront seafood');
                     }}
-                    className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
+                    className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full text-xs font-semibold border border-slate-200/50 dark:border-slate-800/50 transition-colors"
                   >
                     Barcelona 🇪🇸
                   </button>
@@ -651,7 +651,7 @@ export default function Home() {
                 <button
                   disabled={loading || !searchQuery.trim()}
                   onClick={() => handlePlanTrip(searchQuery)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-6 py-3 border border-transparent rounded-xl text-sm font-semibold text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg shadow-violet-500/20 hover:shadow-violet-600/30"
+                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-6 py-3 border border-transparent rounded-full text-sm font-semibold text-white bg-primary hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                 >
                   <Compass className="h-4 w-4 animate-spin-slow" />
                   <span>Plan my trip</span>
@@ -694,7 +694,7 @@ export default function Home() {
             >
               <X className="h-5 w-5" />
             </button>
-            <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400">
+            <div className="flex items-center gap-2 text-primary">
               <Settings className="h-5 w-5" />
               <h3 className="text-lg font-bold text-slate-900 dark:text-white">Travel Planner Settings</h3>
             </div>
@@ -705,7 +705,7 @@ export default function Home() {
                 placeholder={settings.apiKey ? "••••••••••••••••••••" : "Paste your GEMINI_API_KEY..."}
                 defaultValue=""
                 id="apiKeyInput"
-                className="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all text-sm"
+                className="w-full px-4 py-3 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
               />
               <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
                 Your key is stored locally in your browser and is only sent to the serverless proxy function. It is never logged or exposed.
@@ -720,7 +720,7 @@ export default function Home() {
                     setShowSettingsModal(false);
                     showToast('Custom API Key cleared', 'success');
                   }}
-                  className="px-4 py-2 border border-slate-200 dark:border-slate-800 text-red-500 rounded-xl text-xs font-semibold hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                  className="px-4 py-2 border border-slate-200 dark:border-slate-800 text-red-500 rounded-full text-xs font-semibold hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
                 >
                   Clear Key
                 </button>
@@ -734,7 +734,7 @@ export default function Home() {
                     setShowSettingsModal(false);
                   }
                 }}
-                className="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-violet-500/10 transition-colors"
+                className="px-4 py-2 bg-primary hover:opacity-90 text-white rounded-full text-xs font-semibold shadow-sm transition-colors"
               >
                 Save Settings
               </button>

@@ -32,44 +32,38 @@ export default function StopCard({
   const [editDesc, setEditDesc] = useState(stop.description);
   const [editLocation, setEditLocation] = useState(stop.location);
 
-  // Category visual styles helper
+  // Category bubble configuration helper
   const getCategoryConfig = (cat: Stop['category']) => {
     switch (cat) {
       case 'Food':
         return {
-          icon: <Utensils className="h-4 w-4 text-orange-600 dark:text-orange-400" />,
-          colorClass: 'bg-orange-50 border-orange-200 dark:bg-orange-950/30 dark:border-orange-900/40',
-          dotClass: 'bg-orange-500 ring-orange-200 dark:ring-orange-900/50',
+          icon: <Utensils className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-orange-500 dark:bg-orange-600',
         };
       case 'Sight':
         return {
-          icon: <Camera className="h-4 w-4 text-sky-600 dark:text-sky-400" />,
-          colorClass: 'bg-sky-50 border-sky-200 dark:bg-sky-950/30 dark:border-sky-900/40',
-          dotClass: 'bg-sky-500 ring-sky-200 dark:ring-sky-900/50',
+          icon: <Camera className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-sky-500 dark:bg-sky-600',
         };
       case 'Activity':
         return {
-          icon: <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />,
-          colorClass: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-950/30 dark:border-emerald-900/40',
-          dotClass: 'bg-emerald-500 ring-emerald-200 dark:ring-emerald-900/50',
+          icon: <Compass className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-emerald-500 dark:bg-emerald-600',
         };
       case 'Transit':
         return {
-          icon: <Car className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />,
-          colorClass: 'bg-indigo-50 border-indigo-200 dark:bg-indigo-950/30 dark:border-indigo-900/40',
-          dotClass: 'bg-indigo-500 ring-indigo-200 dark:ring-indigo-900/50',
+          icon: <Car className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-slate-500 dark:bg-slate-600',
         };
       case 'Shopping':
         return {
-          icon: <ShoppingBag className="h-4 w-4 text-pink-600 dark:text-pink-400" />,
-          colorClass: 'bg-pink-50 border-pink-200 dark:bg-pink-950/30 dark:border-pink-900/40',
-          dotClass: 'bg-pink-500 ring-pink-200 dark:ring-pink-900/50',
+          icon: <ShoppingBag className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-pink-500 dark:bg-pink-600',
         };
       default:
         return {
-          icon: <Compass className="h-4 w-4 text-slate-600 dark:text-slate-400" />,
-          colorClass: 'bg-slate-50 border-slate-200 dark:bg-slate-900 dark:border-slate-800',
-          dotClass: 'bg-slate-500 ring-slate-200 dark:ring-slate-800',
+          icon: <Compass className="h-3.5 w-3.5 text-white" />,
+          colorClass: 'bg-slate-400 dark:bg-slate-500',
         };
     }
   };
@@ -92,7 +86,6 @@ export default function StopCard({
   };
 
   const handleCancel = () => {
-    // Reset values to original stop fields
     setEditTitle(stop.title);
     setEditTime(stop.time);
     setEditCategory(stop.category);
@@ -105,33 +98,35 @@ export default function StopCard({
   return (
     <div className="relative group/card w-full">
       
-      {/* Timeline Circle Bullet Point */}
-      <div className={`absolute left-[-21px] sm:left-[-27px] top-[14px] h-[12px] w-[12px] rounded-full ring-4 ${catConfig.dotClass} bg-white dark:bg-slate-950 z-10 transition-colors`} />
+      {/* Timeline Solid Icon Bubble (exactly centered on the vertical line) */}
+      <div className={`absolute left-[-37px] sm:left-[-41px] top-[10px] h-8 w-8 rounded-full border-4 border-slate-50 dark:border-slate-950 ${catConfig.colorClass} z-10 flex items-center justify-center shadow-sm select-none`}>
+        {catConfig.icon}
+      </div>
 
-      {/* Main Card Container */}
-      <div className={`p-4 rounded-xl border border-slate-200/60 dark:border-slate-800/60 bg-white dark:bg-slate-950 shadow-sm transition-all duration-300 hover:shadow ${
-        isEditing ? 'ring-2 ring-violet-500/25 border-violet-500 dark:border-violet-500' : ''
+      {/* Main Stop Card */}
+      <div className={`p-4 rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ${
+        isEditing ? 'ring-2 ring-primary/25 border-primary' : ''
       }`}>
         
         {isEditing ? (
-          /* Editing Mode Inputs Form */
+          /* Editing Form state */
           <div className="space-y-4 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="space-y-1">
-                <label className="font-bold text-slate-400">Time</label>
+                <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Time</label>
                 <input
                   type="text"
                   value={editTime}
                   onChange={(e) => setEditTime(e.target.value)}
-                  className="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white"
+                  className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-primary"
                 />
               </div>
               <div className="space-y-1">
-                <label className="font-bold text-slate-400">Category</label>
+                <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Category</label>
                 <select
                   value={editCategory}
                   onChange={(e) => setEditCategory(e.target.value as Stop['category'])}
-                  className="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white font-medium"
+                  className="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-primary"
                 >
                   <option value="Food">Food 🍔</option>
                   <option value="Sight">Sight 📸</option>
@@ -141,61 +136,60 @@ export default function StopCard({
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="font-bold text-slate-400">Duration</label>
+                <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Duration</label>
                 <input
                   type="text"
                   value={editDuration}
                   onChange={(e) => setEditDuration(e.target.value)}
-                  className="w-full px-2 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white"
+                  className="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-400">Stop Title</label>
+              <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Stop Title</label>
               <input
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 placeholder="Name of location..."
-                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-bold text-slate-900 dark:text-white"
+                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-primary"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-400">Description</label>
+              <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Description</label>
               <textarea
                 rows={2}
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
-                placeholder="Add details, advice, or what to order..."
-                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white resize-none"
+                placeholder="Add details or advice..."
+                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-slate-900 dark:text-white resize-none focus:outline-none focus:border-primary"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-400">Location Address</label>
+              <label className="font-bold text-slate-400 uppercase tracking-wider text-[9px]">Location Address</label>
               <input
                 type="text"
                 value={editLocation}
                 onChange={(e) => setEditLocation(e.target.value)}
                 placeholder="Physical address / landmark..."
-                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-white"
+                className="w-full px-2.5 py-2 bg-slate-50 dark:bg-slate-900 border border-border rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-primary"
               />
             </div>
 
-            {/* Save / Cancel actions */}
             <div className="flex justify-end gap-2 pt-1">
               <button
                 onClick={handleCancel}
-                className="flex items-center gap-1 px-3 py-1.5 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-lg text-slate-500 font-bold transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-3 py-1.5 border border-border hover:bg-muted rounded-full text-slate-500 font-bold transition-all cursor-pointer"
               >
                 <X className="h-3.5 w-3.5" />
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="flex items-center gap-1 px-3 py-1.5 bg-violet-600 hover:bg-violet-700 text-white rounded-lg font-bold transition-colors cursor-pointer"
+                className="flex items-center gap-1 px-3 py-1.5 bg-primary hover:opacity-90 text-white rounded-full font-bold transition-all cursor-pointer"
               >
                 <Check className="h-3.5 w-3.5" />
                 Save Stop
@@ -203,26 +197,20 @@ export default function StopCard({
             </div>
           </div>
         ) : (
-          /* View Mode Card Content */
+          /* View Mode state */
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             
-            {/* Left stop details side */}
+            {/* Left stop details */}
             <div className="space-y-2.5 flex-1">
               
-              {/* Timing, Category badge & Duration */}
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              {/* Timing & Duration (No duplicate category tags) */}
+              <div className="flex items-center gap-3 text-xs font-semibold">
                 <span className="text-slate-900 dark:text-white font-extrabold uppercase bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded-lg select-none">
                   {stop.time}
                 </span>
                 
-                {/* Category Pill Tag */}
-                <span className={`flex items-center gap-1.5 px-2.5 py-0.5 border rounded-full select-none ${catConfig.colorClass}`}>
-                  {catConfig.icon}
-                  <span className="text-[10px] uppercase font-bold tracking-wider">{stop.category}</span>
-                </span>
-
                 {stop.duration && (
-                  <span className="flex items-center gap-1 text-[10px] text-slate-400 font-semibold uppercase tracking-wider pl-1 select-none">
+                  <span className="flex items-center gap-1 text-[10px] text-slate-400 font-bold uppercase tracking-wider select-none">
                     <Clock className="h-3 w-3" />
                     {stop.duration}
                   </span>
@@ -251,15 +239,15 @@ export default function StopCard({
 
             </div>
 
-            {/* Right Card Actions Controls (Move, Edit, Delete) */}
-            <div className="flex sm:flex-col items-center justify-end sm:justify-start gap-1 sm:self-stretch border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 dark:border-slate-800/40">
+            {/* Right Card Actions Controls (Move, Edit, Delete) - Fades in on hover */}
+            <div className="flex sm:flex-col items-center justify-end sm:justify-start gap-1 sm:self-stretch border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-100 dark:border-slate-800/40 opacity-100 sm:opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
               
               {/* Move buttons group */}
-              <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-900/50 p-0.5 rounded-lg">
+              <div className="flex items-center gap-1 bg-slate-50 dark:bg-slate-900/50 p-0.5 rounded-full">
                 <button
                   disabled={isFirst}
                   onClick={onMoveUp}
-                  className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all"
+                  className="p-1 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all"
                   title="Move stop up"
                 >
                   <ChevronUp className="h-3.5 w-3.5" />
@@ -267,7 +255,7 @@ export default function StopCard({
                 <button
                   disabled={isLast}
                   onClick={onMoveDown}
-                  className="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all"
+                  className="p-1 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-slate-800 transition-all"
                   title="Move stop down"
                 >
                   <ChevronDown className="h-3.5 w-3.5" />
@@ -278,7 +266,7 @@ export default function StopCard({
               <div className="flex sm:flex-row items-center gap-1 sm:mt-1">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="p-1.5 text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-primary rounded-full hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
                   title="Edit stop"
                 >
                   <Pencil className="h-3.5 w-3.5" />
@@ -289,7 +277,7 @@ export default function StopCard({
                       onRemove();
                     }
                   }}
-                  className="p-1.5 text-slate-400 hover:text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-destructive rounded-full hover:bg-destructive/10 transition-colors"
                   title="Delete stop"
                 >
                   <Trash2 className="h-3.5 w-3.5" />

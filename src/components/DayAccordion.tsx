@@ -37,20 +37,20 @@ export default function DayAccordion({
   };
 
   return (
-    <div className="glass dark:glass border border-slate-200/50 dark:border-slate-800/50 rounded-2xl overflow-hidden shadow-sm transition-all duration-300">
+    <div className="border border-border bg-card rounded-2xl overflow-hidden shadow-sm transition-all duration-300">
       
       {/* Accordion Trigger Header */}
       <div 
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-5 bg-white/40 dark:bg-slate-900/40 hover:bg-white/60 dark:hover:bg-slate-900/60 transition-colors cursor-pointer select-none group"
+        className="w-full flex items-center justify-between p-5 bg-white/40 dark:bg-slate-900/40 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors cursor-pointer select-none group"
       >
         <div className="flex items-center gap-3">
-          <CalendarDays className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+          <CalendarDays className="h-5 w-5 text-primary" />
           <div className="text-left">
-            <h3 className="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+            <h3 className="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-primary transition-colors">
               {day.title}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mt-0.5">
               {isFiltered 
                 ? `Showing ${filteredStops.length} of ${day.stops.length} stops` 
                 : `${day.stops.length} stops`}
@@ -63,7 +63,7 @@ export default function DayAccordion({
           {/* Delete Day Button */}
           <button
             onClick={handleDayDeleteClick}
-            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all"
+            className="p-1.5 text-slate-400 hover:text-destructive hover:bg-destructive/10 rounded-xl opacity-80 sm:opacity-0 group-hover:opacity-100 transition-all"
             title={`Delete Day ${day.dayNumber}`}
           >
             <Trash2 className="h-4 w-4" />
@@ -78,12 +78,12 @@ export default function DayAccordion({
 
       {/* Accordion Content Body */}
       {expanded && (
-        <div className="p-5 border-t border-slate-200/50 dark:border-slate-800/50 bg-slate-50/20 dark:bg-slate-950/10 space-y-6">
+        <div className="p-5 border-t border-border bg-slate-50/10 dark:bg-slate-950/5 space-y-6">
           {filteredStops.length > 0 ? (
-            <div className="relative pl-6 sm:pl-8 space-y-6">
+            <div className="relative pl-10 sm:pl-12 space-y-6">
               
               {/* Vertical Timeline Thread Line */}
-              <div className="absolute left-[13px] sm:left-[17px] top-3 bottom-3 w-[2px] bg-slate-200 dark:bg-slate-800 pointer-events-none" />
+              <div className="absolute left-[19px] sm:left-[23px] top-3 bottom-3 w-[2px] bg-border pointer-events-none" />
 
               {filteredStops.map((stop, idx) => (
                 <StopCard
@@ -111,7 +111,7 @@ export default function DayAccordion({
           {!isFiltered && (
             <button
               onClick={onAddStop}
-              className="w-full flex items-center justify-center gap-1.5 py-3 border-2 border-dashed border-slate-200 hover:border-violet-500 dark:border-slate-800 dark:hover:border-violet-500/50 rounded-xl text-slate-500 hover:text-violet-600 dark:text-slate-400 dark:hover:text-violet-400 text-xs font-bold transition-all bg-white/20 dark:bg-slate-900/10 hover:bg-violet-50/20 dark:hover:bg-violet-950/10 cursor-pointer"
+              className="w-full flex items-center justify-center gap-1.5 py-3 border-2 border-dashed border-border hover:border-primary/50 rounded-xl text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary text-xs font-bold transition-all bg-white/20 dark:bg-slate-900/10 hover:bg-primary/5 dark:hover:bg-primary/5 cursor-pointer"
             >
               <Plus className="h-4 w-4" />
               <span>Add Stop</span>
