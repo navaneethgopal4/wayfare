@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ArrowLeft, Search, BookmarkCheck, RotateCcw, Send, Sparkles } from 'lucide-react';
-import { Trip, Day, Stop } from '@/utils/storage';
+import { Trip, Stop } from '@/utils/storage';
 import DayAccordion from './DayAccordion';
 
 interface ItineraryViewProps {
@@ -25,7 +25,7 @@ function parseDuration(durationStr: string): number {
       return val * 60;
     }
     return val;
-  } catch (_) {
+  } catch {
     return 60;
   }
 }
@@ -240,7 +240,7 @@ export default function ItineraryView({ trip, onUpdateTrip, onClose, onSaveFilte
             ].map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setFilter(tab.key as DurationFilter)}
+                onClick={() => setDurationFilter(tab.key as DurationFilter)}
                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors border border-transparent select-none ${
                   durationFilter === tab.key
                     ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm border-slate-200/40 dark:border-slate-800/40'
