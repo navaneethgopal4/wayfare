@@ -592,7 +592,7 @@ export default function Home() {
             
             {/* Landing Intro */}
             <div className="text-center space-y-4">
-              <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-none bg-gradient-to-r from-slate-900 via-violet-950 to-slate-900 dark:from-white dark:via-violet-400 dark:to-white bg-clip-text text-transparent">
+              <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-none bg-gradient-to-r from-slate-900 via-primary to-slate-900 dark:from-white dark:via-primary dark:to-white bg-clip-text text-transparent">
                 A trip in a sentence
               </h1>
               <p className="text-lg text-slate-500 dark:text-slate-400 font-medium">
@@ -651,7 +651,7 @@ export default function Home() {
                 <button
                   disabled={loading || !searchQuery.trim()}
                   onClick={() => handlePlanTrip(searchQuery)}
-                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-6 py-3 border border-transparent rounded-full text-sm font-semibold text-white bg-primary hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-6 py-3 border border-transparent rounded-full text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-orange-500/15 hover:shadow-orange-600/25 active:scale-98 cursor-pointer"
                 >
                   <Compass className="h-4 w-4 animate-spin-slow" />
                   <span>Plan my trip</span>
