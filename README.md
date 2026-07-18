@@ -34,16 +34,6 @@ To use live AI generation, you need a **Gemini API Key**.
 > **No API Key? No problem!** 
 > If the API key is not configured, the app will automatically detect this and run in a high-fidelity **Simulated Demo Mode** with pre-defined travel templates, or allow you to enter a key directly in the web UI (saved locally in your browser's `localStorage` for privacy).
 
-### Running the App
-
-To start the local development server:
-```bash
-npm start
-# or npm run dev
-```
-Open **[http://localhost:3000](http://localhost:3000)** in your browser to explore the app.
-
----
 
 ## 🎨 Features & Implementation
 
@@ -75,7 +65,7 @@ A major focus of this project is ensuring a smooth user experience even when the
 
 ## 📝 AI-Usage Note
 
-This project was built in collaboration with **Antigravity**, an agentic coding assistant by Google DeepMind.
+This project was built in collaboration with **Antigravity** and **lovable**.
 * **How it was used**: Antigravity helped bootstrap the Next.js directories, write clean utility scripts, design the CSS theme system in Tailwind CSS, write React components (StopCard, SavedDrawer, DayAccordion), and configure local storage integrations.
 * **Original Work**: The styling, prompt architecture, API proxy routing, and local fallback logic were tailored, verified, and audited step-by-step for correctness.
 
