@@ -625,6 +625,668 @@ const BARCELONA_TRIP: Omit<Trip, 'id' | 'createdAt' | 'originalPrompt'> = {
   ]
 };
 
+// ==========================================
+// Indian Travel Templates & Mocks
+// ==========================================
+
+const GOA_TRIP: Omit<Trip, 'id' | 'createdAt' | 'originalPrompt'> = {
+  title: '3 Days Sunny Beach Escape to Goa',
+  description: 'Relax on beautiful sandy beaches, explore historic Portuguese forts, and savor authentic Goan fish curry.',
+  days: [
+    {
+      dayNumber: 1,
+      title: 'Day 1: North Goa Beaches & Forts',
+      stops: [
+        {
+          id: 'goa-d1-s1',
+          time: '09:00 AM',
+          title: 'Breakfast at German Bakery Anjuna',
+          category: 'Food',
+          duration: '60 min',
+          description: 'Enjoy delicious organic breakfast, fresh juices, and croissants in a relaxed garden setting.',
+          location: 'Anjuna, Goa'
+        },
+        {
+          id: 'goa-d1-s2',
+          time: '10:30 AM',
+          title: 'Explore Fort Aguada',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Visit the 17th-century Portuguese lighthouse and fort, offering stunning panoramic ocean views.',
+          location: 'Sinquerim, Candolim, Goa'
+        },
+        {
+          id: 'goa-d1-s3',
+          time: '01:00 PM',
+          title: 'Goan Thali at Ritz Classic',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Savor an authentic Goan fish curry thali with fresh prawns, crab, and local fried fish.',
+          location: 'Panaji, Goa'
+        },
+        {
+          id: 'goa-d1-s4',
+          time: '03:30 PM',
+          title: 'Relax at Vagator Beach',
+          category: 'Activity',
+          duration: '120 min',
+          description: 'Walk along the dramatic red cliffs of Vagator and view the famous Shiva carving on the beach.',
+          location: 'Vagator, Goa'
+        },
+        {
+          id: 'goa-d1-s5',
+          time: '06:00 PM',
+          title: 'Sunset at Chapora Fort',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Trek up to the iconic fort ruins (famous from Dil Chahta Hai movie) to watch a gorgeous sunset over the sea.',
+          location: 'Chapora, Goa'
+        },
+        {
+          id: 'goa-d1-s6',
+          time: '08:30 PM',
+          title: 'Beachside Dinner at Curlies Shack',
+          category: 'Food',
+          duration: '120 min',
+          description: 'Dine with your toes in the sand, listening to waves, and enjoying tandoori seafood and cocktails.',
+          location: 'Anjuna Beach, Goa'
+        }
+      ]
+    },
+    {
+      dayNumber: 2,
+      title: 'Day 2: South Goa Heritage & Spices',
+      stops: [
+        {
+          id: 'goa-d2-s1',
+          time: '09:30 AM',
+          title: 'Basilica of Bom Jesus',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Visit the UNESCO world heritage site holding the mortal remains of St. Francis Xavier.',
+          location: 'Old Goa, Goa'
+        },
+        {
+          id: 'goa-d2-s2',
+          time: '11:30 AM',
+          title: 'Tropical Spice Plantation Tour',
+          category: 'Activity',
+          duration: '120 min',
+          description: 'Take a guided walk among cardamom, black pepper, and vanilla vines, followed by a traditional buffet lunch served on banana leaves.',
+          location: 'Ponda, Goa'
+        },
+        {
+          id: 'goa-d2-s3',
+          time: '02:30 PM',
+          title: 'Mangeshi Temple Visit',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Visit the beautiful, historic Hindu temple dedicated to Lord Shiva, famous for its elegant tower.',
+          location: 'Mangeshi, Goa'
+        },
+        {
+          id: 'goa-d2-s4',
+          time: '04:30 PM',
+          title: 'Stroll Colva Beach',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Walk along the endless white sands of South Goa, enjoying a quieter beach atmosphere.',
+          location: 'Colva, Goa'
+        },
+        {
+          id: 'goa-d2-s5',
+          time: '07:30 PM',
+          title: 'Dinner at Martin\'s Corner',
+          category: 'Food',
+          duration: '120 min',
+          description: 'Famous restaurant serving incredible pork vindaloo, butter garlic crabs, and live Goan music.',
+          location: 'Betalbatim, South Goa, Goa'
+        }
+      ]
+    },
+    {
+      dayNumber: 3,
+      title: 'Day 3: Panaji Latin Quarter & Cruise',
+      stops: [
+        {
+          id: 'goa-d3-s1',
+          time: '10:00 AM',
+          title: 'Stroll Fontainhas Latin Quarter',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Walk through narrow streets of brightly colored Portuguese-style heritage houses and cozy art cafes.',
+          location: 'Fontainhas, Panaji, Goa'
+        },
+        {
+          id: 'goa-d3-s2',
+          time: '12:00 PM',
+          title: 'Lunch at Confeitaria 31 De Janeiro',
+          category: 'Food',
+          duration: '60 min',
+          description: 'Visit one of Panaji\'s oldest bakeries for traditional beef patties, fish cutlets, and local bebinca dessert.',
+          location: 'Fontainhas, Panaji, Goa'
+        },
+        {
+          id: 'goa-d3-s3',
+          time: '01:30 PM',
+          title: 'Immaculate Conception Church',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Admire the famous white baroque zig-zag stairs of this landmark historic church in central Panaji.',
+          location: 'Panaji, Goa'
+        },
+        {
+          id: 'goa-d3-s4',
+          time: '03:00 PM',
+          title: 'Shopping at Panjim Municipal Market',
+          category: 'Shopping',
+          duration: '90 min',
+          description: 'Buy local Goan cashews, spices, hand-woven handicrafts, and traditional Goa feni liquor.',
+          location: 'Panaji, Goa'
+        },
+        {
+          id: 'goa-d3-s5',
+          time: '05:30 PM',
+          title: 'Mandovi River Sunset Cruise',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Board a river cruise to watch a scenic sunset while enjoying traditional Goan folk dances and music.',
+          location: 'Panaji Jetty, Goa'
+        }
+      ]
+    }
+  ]
+};
+
+const MUMBAI_TRIP: Omit<Trip, 'id' | 'createdAt' | 'originalPrompt'> = {
+  title: '3 Days in Mumbai — City of Dreams',
+  description: 'Experience Mumbai\'s iconic Victorian heritage, bustling local trains, legendary street food, and peaceful sunsets at Marine Drive.',
+  days: [
+    {
+      dayNumber: 1,
+      title: 'Day 1: South Mumbai Heritage & Gateway',
+      stops: [
+        {
+          id: 'mumbai-d1-s1',
+          time: '09:00 AM',
+          title: 'Breakfast at Kyani & Co.',
+          category: 'Food',
+          duration: '60 min',
+          description: 'A legendary 100-year-old Irani cafe. Try bun maska, double half-fry eggs, and Irani chai.',
+          location: 'Metro Junction, Marine Lines, Mumbai'
+        },
+        {
+          id: 'mumbai-d1-s2',
+          time: '10:30 AM',
+          title: 'Chhatrapati Shivaji Maharaj Terminus (CSMT)',
+          category: 'Sight',
+          duration: '45 min',
+          description: 'Marvel at the stunning Gothic Revival architecture of this UNESCO world heritage railway station.',
+          location: 'Fort, Mumbai'
+        },
+        {
+          id: 'mumbai-d1-s3',
+          time: '11:45 AM',
+          title: 'Gateway of India & Taj Mahal Palace',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Stand before the iconic stone arch overlooking the Arabian Sea, right next to the historic Taj Hotel.',
+          location: 'Apollo Bandar, Colaba, Mumbai'
+        },
+        {
+          id: 'mumbai-d1-s4',
+          time: '01:00 PM',
+          title: 'Lunch at Cafe Leopold',
+          category: 'Food',
+          duration: '90 min',
+          description: 'A bustling multi-cuisine landmark in Colaba. Popular for beer, Chinese, and Indian plates.',
+          location: 'Colaba Causeway, Mumbai'
+        },
+        {
+          id: 'mumbai-d1-s5',
+          time: '03:00 PM',
+          title: 'Shopping at Colaba Causeway',
+          category: 'Shopping',
+          duration: '90 min',
+          description: 'Browse the famous street stalls for silver jewelry, handicrafts, shoes, and vintage items.',
+          location: 'Colaba, Mumbai'
+        },
+        {
+          id: 'mumbai-d1-s6',
+          time: '05:30 PM',
+          title: 'Sunset at Marine Drive',
+          category: 'Activity',
+          duration: '120 min',
+          description: 'Sit on the concrete promenade (Queen\'s Necklace) and watch a gorgeous sunset over the Arabian Sea.',
+          location: 'Netaji Subhash Chandra Bose Road, Mumbai'
+        }
+      ]
+    },
+    {
+      dayNumber: 2,
+      title: 'Day 2: Bandra Vibe & Elephanta Caves',
+      stops: [
+        {
+          id: 'mumbai-d2-s1',
+          time: '09:00 AM',
+          title: 'Ferry to Elephanta Caves',
+          category: 'Transit',
+          duration: '90 min',
+          description: 'Catch a scenic boat ride from the Gateway of India to Gharapuri Island.',
+          location: 'Gateway of India, Mumbai'
+        },
+        {
+          id: 'mumbai-d2-s2',
+          time: '10:30 AM',
+          title: 'Explore Elephanta Caves',
+          category: 'Sight',
+          duration: '120 min',
+          description: 'Walk through ancient 5th-century rock-cut temples dedicated to Lord Shiva, featuring the massive Trimurti sculpture.',
+          location: 'Elephanta Island, Mumbai'
+        },
+        {
+          id: 'mumbai-d2-s3',
+          time: '01:30 PM',
+          title: 'Lunch at Britannia & Co.',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Historic Parsi restaurant famous for its legendary Berry Pulav and caramel custard.',
+          location: 'Ballard Estate, Fort, Mumbai'
+        },
+        {
+          id: 'mumbai-d2-s4',
+          time: '03:30 PM',
+          title: 'Drive across Bandra-Worli Sea Link',
+          category: 'Transit',
+          duration: '30 min',
+          description: 'Take a taxi across the magnificent 8-lane cable-stayed bridge over the sea, linking south and suburbs.',
+          location: 'Sea Link, Mumbai'
+        },
+        {
+          id: 'mumbai-d2-s5',
+          time: '04:30 PM',
+          title: 'Wander Bandra Bandstand',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Walk along the seaside promenade, view the celebrity houses (like SRK\'s Mannat), and see the historic Bandra Fort ruins.',
+          location: 'Bandra West, Mumbai'
+        },
+        {
+          id: 'mumbai-d2-s6',
+          time: '07:30 PM',
+          title: 'Dinner at Joey\'s Pizza or Elco Pani Puri',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Treat yourself to Mumbai\'s best street chaat or local fusion pizza.',
+          location: 'Bandra, Mumbai'
+        }
+      ]
+    },
+    {
+      dayNumber: 3,
+      title: 'Day 3: Local Culture & Street Food',
+      stops: [
+        {
+          id: 'mumbai-d3-s1',
+          time: '10:00 AM',
+          title: 'Haji Ali Dargah',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Walk across the narrow pathway in the middle of the sea to visit the famous 15th-century mosque.',
+          location: 'Lala Lajpatrai Marg, Mumbai'
+        },
+        {
+          id: 'mumbai-d3-s2',
+          time: '12:00 PM',
+          title: 'Lunch at Sardar Refreshments',
+          category: 'Food',
+          duration: '60 min',
+          description: 'Taste the ultimate, buttery Mumbai Pav Bhaji served with soft warm buns.',
+          location: 'Tardeo, Mumbai'
+        },
+        {
+          id: 'mumbai-d3-s3',
+          time: '02:00 PM',
+          title: 'Dharavi Local Industry Tour',
+          category: 'Activity',
+          duration: '120 min',
+          description: 'Take a respectful guided walking tour of Dharavi\'s leather, plastic recycling, and pottery workshops.',
+          location: 'Dharavi, Mumbai'
+        },
+        {
+          id: 'mumbai-d3-s4',
+          time: '04:30 PM',
+          title: 'Siddhivinayak Temple Visit',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Visit Mumbai\'s most famous temple dedicated to Lord Ganesha.',
+          location: 'Prabhadevi, Mumbai'
+        },
+        {
+          id: 'mumbai-d3-s5',
+          time: '06:00 PM',
+          title: 'Street Food Crawl at Chowpatty Beach',
+          category: 'Food',
+          duration: '120 min',
+          description: 'Sample local street bites: Vada Pav, Sev Puri, Bhel Puri, and spicy Ragda Pattice on the beach sand.',
+          location: 'Girgaon Chowpatty, Mumbai'
+        }
+      ]
+    }
+  ]
+};
+
+const DELHI_TRIP: Omit<Trip, 'id' | 'createdAt' | 'originalPrompt'> = {
+  title: '3 Days Golden Triangle: Delhi Heritage',
+  description: 'Explore the grand historic monuments of Delhi, Old Delhi\'s legendary street food, and bustling traditional bazaars.',
+  days: [
+    {
+      dayNumber: 1,
+      title: 'Day 1: Old Delhi Heritage & Street Food',
+      stops: [
+        {
+          id: 'delhi-d1-s1',
+          time: '09:30 AM',
+          title: 'Breakfast at Jalebi Wala',
+          category: 'Food',
+          duration: '45 min',
+          description: 'Start with piping hot, thick, syrupy jalebis fried in pure ghee, a 150-year-old tradition.',
+          location: 'Chandni Chowk, Old Delhi'
+        },
+        {
+          id: 'delhi-d1-s2',
+          time: '10:30 AM',
+          title: 'Explore Red Fort (Lal Qila)',
+          category: 'Sight',
+          duration: '120 min',
+          description: 'Tour the massive 17th-century red sandstone fortress built by Mughal Emperor Shah Jahan.',
+          location: 'Netaji Subhash Marg, New Delhi'
+        },
+        {
+          id: 'delhi-d1-s3',
+          time: '01:00 PM',
+          title: 'Mughlai Lunch at Karim\'s',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Savor legendary mutton seekh kebabs, butter chicken, and fresh tandoori roti near Jama Masjid.',
+          location: 'Gali Kababian, Jama Masjid, Old Delhi'
+        },
+        {
+          id: 'delhi-d1-s4',
+          time: '02:30 PM',
+          title: 'Visit Jama Masjid',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'One of the largest mosques in India, featuring grand black-and-white marble domes and minarets.',
+          location: 'Chandni Chowk, Old Delhi'
+        },
+        {
+          id: 'delhi-d1-s5',
+          time: '04:00 PM',
+          title: 'Rickshaw Ride in Chandni Chowk',
+          category: 'Transit',
+          duration: '60 min',
+          description: 'Take a thrilling cycle-rickshaw ride through the narrow lanes of the spice market (Khari Baoli) and wedding bazaar.',
+          location: 'Chandni Chowk, Old Delhi'
+        },
+        {
+          id: 'delhi-d1-s6',
+          time: '06:00 PM',
+          title: 'Kulfi at Giani\'s di Hatti',
+          category: 'Food',
+          duration: '45 min',
+          description: 'Indulge in traditional creamy Rabri Falooda kulfi dessert.',
+          location: 'Church Mission Road, Fatehpuri, Delhi'
+        }
+      ]
+    },
+    {
+      dayNumber: 2,
+      title: 'Day 2: Imperial Monuments of New Delhi',
+      stops: [
+        {
+          id: 'delhi-d2-s1',
+          time: '09:00 AM',
+          title: 'Walk around India Gate',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Visit the grand stone arch war memorial and stroll along the green lawns of Rajpath.',
+          location: 'Rajpath, New Delhi'
+        },
+        {
+          id: 'delhi-d2-s2',
+          time: '10:30 AM',
+          title: 'Humayun\'s Tomb Visit',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Explore the spectacular 16th-century garden tomb of the Mughal Emperor Humayun, which inspired the Taj Mahal.',
+          location: 'Nizamuddin East, New Delhi'
+        },
+        {
+          id: 'delhi-d2-s3',
+          time: '01:00 PM',
+          title: 'Lunch at Connaught Place (CP)',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Dine in Delhi\'s colonial shopping circle. Try North Indian dishes at Wenger\'s or United Coffee House.',
+          location: 'Connaught Place, New Delhi'
+        },
+        {
+          id: 'delhi-d2-s4',
+          time: '03:00 PM',
+          title: 'Shopping at Janpath Market',
+          category: 'Shopping',
+          duration: '90 min',
+          description: 'Shop for ethnic clothing, silver jewelry, leather bags, and traditional Tibetan artifacts.',
+          location: 'Janpath, New Delhi'
+        },
+        {
+          id: 'delhi-d2-s5',
+          time: '05:00 PM',
+          title: 'Qutub Minar Complex',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Marvel at the 73-meter tall red sandstone tower built in 1193, surrounded by ancient ruins and the rust-free Iron Pillar.',
+          location: 'Mehrauli, New Delhi'
+        }
+      ]
+    },
+    {
+      dayNumber: 3,
+      title: 'Day 3: Spiritual Heritage & Modern Cafes',
+      stops: [
+        {
+          id: 'delhi-d3-s1',
+          time: '09:30 AM',
+          title: 'Lotus Temple Stroll',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Visit the striking lotus-shaped Bahai House of Worship, designed for silent meditation and prayer.',
+          location: 'Kalkaji, New Delhi'
+        },
+        {
+          id: 'delhi-d3-s2',
+          time: '11:00 AM',
+          title: 'National Crafts Museum',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'Observe traditional terracotta horses, carved wooden doors, and weavers demonstrating ethnic crafts.',
+          location: 'Pragati Maidan, New Delhi'
+        },
+        {
+          id: 'delhi-d3-s3',
+          time: '01:00 PM',
+          title: 'Lunch at Cafe Lota',
+          category: 'Food',
+          duration: '90 min',
+          description: 'An elegant open-air museum cafe serving creative, modern twists on regional Indian dishes.',
+          location: 'Crafts Museum, Pragati Maidan, New Delhi'
+        },
+        {
+          id: 'delhi-d3-s4',
+          time: '03:00 PM',
+          title: 'Champa Gali Creative Stroll',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Explore a hidden, cobblestone alleyway in Saket filled with design studios, coffee roasters, and fairy lights.',
+          location: 'Saidulajab, Saket, New Delhi'
+        },
+        {
+          id: 'delhi-d3-s5',
+          time: '05:30 PM',
+          title: 'Bangla Sahib Gurudwara Sunset',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Sit by the peaceful golden-domed Sikh temple\'s massive holy pool (sarovar) and observe the mega community kitchen.',
+          location: 'Ashoka Road, Connaught Place, New Delhi'
+        }
+      ]
+    }
+  ]
+};
+
+const KERALA_TRIP: Omit<Trip, 'id' | 'createdAt' | 'originalPrompt'> = {
+  title: '3 Days Serene Kerala Escape',
+  description: 'Experience God\'s Own Country: colonial Fort Kochi heritage, lush Munnar tea gardens, and the relaxing Alleppey backwater houseboats.',
+  days: [
+    {
+      dayNumber: 1,
+      title: 'Day 1: Colonial Fort Kochi Heritage',
+      stops: [
+        {
+          id: 'kerala-d1-s1',
+          time: '09:00 AM',
+          title: 'Breakfast at Kashi Art Cafe',
+          category: 'Food',
+          duration: '60 min',
+          description: 'Enjoy fresh organic scrambled eggs, homemade bread, and coffee in a gallery-styled courtyard.',
+          location: 'Burger Street, Fort Kochi, Kochi'
+        },
+        {
+          id: 'kerala-d1-s2',
+          time: '10:30 AM',
+          title: 'Chinese Fishing Nets Stroll',
+          category: 'Sight',
+          duration: '90 min',
+          description: 'See the massive cantilevered wooden fishing nets, introduced by Chinese traders in the 14th century.',
+          location: 'Fort Kochi Beach, Kochi'
+        },
+        {
+          id: 'kerala-d1-s3',
+          time: '01:00 PM',
+          title: 'Kerala Fish Curry Meals at Oceanos',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Taste spicy Kerala fish pollichathu (baked in banana leaf) served with local red rice.',
+          location: 'Elphinstone Road, Fort Kochi, Kochi'
+        },
+        {
+          id: 'kerala-d1-s4',
+          time: '03:00 PM',
+          title: 'Mattancherry Palace & Jew Town',
+          category: 'Sight',
+          duration: '120 min',
+          description: 'Visit the Portuguese "Dutch Palace" containing beautiful murals of Hindu epics, then browse antique shops.',
+          location: 'Jew Town, Mattancherry, Kochi'
+        },
+        {
+          id: 'kerala-d1-s5',
+          time: '06:00 PM',
+          title: 'Kathakali Dance Show',
+          category: 'Activity',
+          duration: '90 min',
+          description: 'Watch a traditional Kathakali dance-drama performance, including the elaborate face-painting process beforehand.',
+          location: 'Kerala Kathakali Centre, Fort Kochi'
+        }
+      ]
+    },
+    {
+      dayNumber: 2,
+      title: 'Day 2: Tea Hills of Munnar',
+      stops: [
+        {
+          id: 'kerala-d2-s1',
+          time: '09:00 AM',
+          title: 'Scenic Drive to Munnar',
+          category: 'Transit',
+          duration: '180 min',
+          description: 'Enjoy a beautiful, winding road trip up to the Western Ghats, passing cascading waterfalls and pine forests.',
+          location: 'Kochi-Munnar Highway, Kerala'
+        },
+        {
+          id: 'kerala-d2-s2',
+          time: '01:00 PM',
+          title: 'Lunch at Saravana Bhavan Munnar',
+          category: 'Food',
+          duration: '60 min',
+          description: 'Savor quick, delicious South Indian paper dosas and filter coffee.',
+          location: 'Munnar Town, Kerala'
+        },
+        {
+          id: 'kerala-d2-s3',
+          time: '02:30 PM',
+          title: 'Walk Munnar Tea Plantations',
+          category: 'Sight',
+          duration: '120 min',
+          description: 'Stroll through endless rows of manicured green tea bushes and capture beautiful mist-filled valley views.',
+          location: 'Lockhart Tea Estate, Munnar, Kerala'
+        },
+        {
+          id: 'kerala-d2-s4',
+          time: '05:00 PM',
+          title: 'Visit Munnar Tea Museum',
+          category: 'Activity',
+          duration: '60 min',
+          description: 'Learn about the history of tea processing in India, watching vintage machinery in action.',
+          location: 'Nallathanni Estate, Munnar, Kerala'
+        }
+      ]
+    },
+    {
+      dayNumber: 3,
+      title: 'Day 3: Alleppey Backwaters Houseboat',
+      stops: [
+        {
+          id: 'kerala-d3-s1',
+          time: '09:00 AM',
+          title: 'Drive to Alleppey Backwaters',
+          category: 'Transit',
+          duration: '150 min',
+          description: 'Drive down to the serene coastal town of Alappuzha, the Venice of the East.',
+          location: 'Alleppey, Kerala'
+        },
+        {
+          id: 'kerala-d3-s2',
+          time: '11:45 AM',
+          title: 'Board Traditional Houseboat',
+          category: 'Activity',
+          duration: '300 min',
+          description: 'Settle into a traditional bamboo-and-thatch houseboat to cruise the peaceful lagoons, canals, and coconut groves.',
+          location: 'Alleppey Jetty, Kerala'
+        },
+        {
+          id: 'kerala-d3-s3',
+          time: '01:30 PM',
+          title: 'On-Board Karimeen Thali Lunch',
+          category: 'Food',
+          duration: '90 min',
+          description: 'Enjoy fresh, chef-cooked pearl spot fish curry, red rice, cabbage thoran, and payasam dessert on the boat.',
+          location: 'Alleppey Houseboat, Kerala'
+        },
+        {
+          id: 'kerala-d3-s4',
+          time: '05:00 PM',
+          title: 'Sunset over Vembanad Lake',
+          category: 'Sight',
+          duration: '60 min',
+          description: 'Relax on the deck as the sun sets over India\'s longest lake, bathing the palms in golden orange light.',
+          location: 'Vembanad Lake, Alleppey, Kerala'
+        }
+      ]
+    }
+  ]
+};
+
 // Generic mock templates to generate a trip dynamically if search doesn't match predefined ones
 const SIGHT_MOCKS = [
   { title: 'Historic Old Town Square', desc: 'Stroll through the historic center, admiring the classical architecture and local street performers.' },
@@ -673,9 +1335,16 @@ export async function simulateTripGeneration(prompt: string): Promise<Trip> {
     baseTrip = TOKYO_TRIP;
   } else if (lower.includes('barcelona')) {
     baseTrip = BARCELONA_TRIP;
+  } else if (lower.includes('goa')) {
+    baseTrip = GOA_TRIP;
+  } else if (lower.includes('mumbai') || lower.includes('bombay')) {
+    baseTrip = MUMBAI_TRIP;
+  } else if (lower.includes('delhi')) {
+    baseTrip = DELHI_TRIP;
+  } else if (lower.includes('kerala')) {
+    baseTrip = KERALA_TRIP;
   } else {
     // Parse duration and destination dynamically from prompt
-    // e.g. "4 days in Paris" -> 4 days, destination Paris
     let daysCount = 3;
     const dayMatch = prompt.match(/(\d+)\s*day/i);
     if (dayMatch) {
@@ -687,15 +1356,64 @@ export async function simulateTripGeneration(prompt: string): Promise<Trip> {
     const inMatch = prompt.match(/to\s+([A-Za-z\s]+)/i) || prompt.match(/in\s+([A-Za-z\s]+)/i) || prompt.match(/trip\s+([A-Za-z\s]+)/i);
     if (inMatch) {
       destination = inMatch[1].trim().split(' ')[0]; // Take first word to keep it clean
-      // Capitalize
       destination = destination.charAt(0).toUpperCase() + destination.slice(1);
     } else {
-      // Split words and grab one
       const words = prompt.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").split(' ');
-      const candidate = words.find(w => w.length > 3 && !['days', 'trip', 'relaxed', 'solo', 'with', 'plan', 'days'].includes(w.toLowerCase()));
+      // Handle short domestic names like Goa (length 3)
+      const candidate = words.find(w => w.length >= 3 && !['days', 'trip', 'relaxed', 'solo', 'with', 'plan', 'days'].includes(w.toLowerCase()));
       if (candidate) {
         destination = candidate.charAt(0).toUpperCase() + candidate.slice(1);
       }
+    }
+
+    // Localized Indian prompt flag
+    const isIndianPrompt = 
+      lower.includes('india') || 
+      lower.includes('mumbai') || 
+      lower.includes('delhi') || 
+      lower.includes('goa') || 
+      lower.includes('kerala') || 
+      lower.includes('bangalore') || 
+      lower.includes('kolkata') || 
+      lower.includes('chennai') || 
+      lower.includes('jaipur') || 
+      lower.includes('agra') || 
+      lower.includes('taj') || 
+      lower.includes('local') ||
+      ['goa', 'delhi', 'kochi', 'pune'].some(city => lower.includes(city));
+
+    let sightMocks = SIGHT_MOCKS;
+    let foodMocks = FOOD_MOCKS;
+    let activityMocks = ACTIVITY_MOCKS;
+    let shoppingMocks = SHOPPING_MOCKS;
+    let transitMocks = TRANSIT_MOCKS;
+
+    if (isIndianPrompt) {
+      sightMocks = [
+        { title: 'Historic Heritage Palace', desc: 'Explore the stunning arches, intricate carvings, and royal history of this ancient heritage monument.' },
+        { title: 'Ancient Temple & Spiritual Center', desc: 'Visit a historic temple, absorbing the peaceful chanting, sweet incense, and beautiful traditional architecture.' },
+        { title: 'Bustling Local Viewpoint', desc: 'Look out over the sprawling city skyline, colorful streets, and landmark landscapes.' },
+        { title: 'UNESCO Archaeological Ruins', desc: 'Wander through ancient ruins, stone-cut caves, and carvings dating back hundreds of years.' }
+      ];
+      foodMocks = [
+        { title: 'Famous Street Food Crawl', desc: 'Sample legendary street delicacies: hot samosas, spicy chaat, crispy vadas, and local sweets.' },
+        { title: 'Traditional Thali Lunch', desc: 'Savor a massive regional thali served on banana leaves with diverse curries, rice, and flatbreads.' },
+        { title: 'Masala Chai Stall Stop', desc: 'Stop at a roadside tea stall for piping hot masala cutting chai brewed with cardamom and ginger.' },
+        { title: 'Authentic Local Diner', desc: 'Dine at a historic local restaurant serving traditional tandoori dishes, butter chicken, or local biryani.' }
+      ];
+      activityMocks = [
+        { title: 'Guided Walking Heritage Tour', desc: 'Wander through historical lanes and learn about the local culture, struggles, and dynastic history.' },
+        { title: 'Sunset Boat / River Cruise', desc: 'Float along the river or coast, catching breezy views of active fishing boats and ancient sea forts.' },
+        { title: 'Traditional Craft Workshop', desc: 'Watch local weavers, potters, or spice merchants practice their historic trades.' }
+      ];
+      shoppingMocks = [
+        { title: 'Bustling Spice & Tea Bazaar', desc: 'Explore narrow bazaar alleyways filled with sacks of cardamom, saffron, turmeric, and local teas.' },
+        { title: 'Traditional Handloom & Saree Shop', desc: 'Browse colorful hand-woven silks, cotton kurtas, and traditional textiles directly from weavers.' }
+      ];
+      transitMocks = [
+        { title: 'Auto-Rickshaw Ride', desc: 'Experience a thrilling, breezy ride through the city\'s traffic in a traditional yellow-and-black auto-rickshaw.' },
+        { title: 'Scenic Heritage Train Journey', desc: 'Enjoy countryside views on a local railway journey crossing bridges and tunnels.' }
+      ];
     }
 
     const days: Day[] = [];
@@ -713,15 +1431,15 @@ export async function simulateTripGeneration(prompt: string): Promise<Trip> {
         let mockDetails = { title: 'Stop Title', desc: 'Description of the stop' };
         
         if (cat === 'Sight') {
-          mockDetails = SIGHT_MOCKS[Math.floor(Math.random() * SIGHT_MOCKS.length)];
+          mockDetails = sightMocks[Math.floor(Math.random() * sightMocks.length)];
         } else if (cat === 'Food') {
-          mockDetails = FOOD_MOCKS[Math.floor(Math.random() * FOOD_MOCKS.length)];
+          mockDetails = foodMocks[Math.floor(Math.random() * foodMocks.length)];
         } else if (cat === 'Activity') {
-          mockDetails = ACTIVITY_MOCKS[Math.floor(Math.random() * ACTIVITY_MOCKS.length)];
+          mockDetails = activityMocks[Math.floor(Math.random() * activityMocks.length)];
         } else if (cat === 'Shopping') {
-          mockDetails = SHOPPING_MOCKS[Math.floor(Math.random() * SHOPPING_MOCKS.length)];
+          mockDetails = shoppingMocks[Math.floor(Math.random() * shoppingMocks.length)];
         } else {
-          mockDetails = TRANSIT_MOCKS[Math.floor(Math.random() * TRANSIT_MOCKS.length)];
+          mockDetails = transitMocks[Math.floor(Math.random() * transitMocks.length)];
         }
 
         stops.push({
@@ -821,8 +1539,6 @@ export async function simulateTripRefinement(currentTrip: Trip, refinementPrompt
 }
 
 function reorderTimes(stops: Stop[]): Stop[] {
-  // A helper that makes sure stops are laid out chronologically or simply sorted
-  // To keep it simple, we just keep them in insertion order but format the times nicely
   const times = ['09:00 AM', '11:00 AM', '01:00 PM', '02:30 PM', '04:00 PM', '06:00 PM', '08:00 PM'];
   return stops.map((stop, idx) => ({
     ...stop,
